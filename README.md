@@ -2,13 +2,14 @@
 
 A Python library for bulk sending WhatsApp messages and automatic custom responses through Twilio's WhatsApp API.
 
-
 ## Installation
 
-1. Install the required dependencies
+1. Clone the repo and Install the required dependencies
 
 ```bash
-pip install pandas twilio dotenv
+git clone https://github.com/anantoj/harnis_twilio.git
+cd harnis_twilio
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -63,21 +64,20 @@ sh example_run.sh
 
 Before using this library, you'll need to prepare your Twilio account with the necessary settings. If you don't have one already, head over to [console.twilio.com](https://console.twilio.com/) and create a free Twilio account.
 
-
 In the Twilio Console, navigate to "Project > Settings > General." Find your Account SID and Auth Token. Copy and securely store them, as you'll need them in your .env file later.
 
 ### Setup a WhatsApp Sender
 
 There are two options for sending personalized WhatsApp messages:
 
-#### 1. Use Your Own Phone Number:
+#### 1. Use Your Own Phone Number
 
 - In the Twilio Console, go to "Messaging > Senders > WhatsApp Senders."
 - Click "New WhatsApp Sender" and submit a request using your own phone number.
 - This process requires approval from Facebook, which can take some time.
 - Once approved, you'll receive a Display Name (for recipient display) and a WhatsApp Identifier (used in the script).
 
-#### 2. Purchase a Twilio Phone Number for WhatsApp:
+#### 2. Purchase a Twilio Phone Number for WhatsApp
 
 - Navigate to "Numbers > Available Numbers" in the Twilio Console.
 - Search for phone numbers with "WhatsApp Capability."
@@ -88,7 +88,7 @@ There are two options for sending personalized WhatsApp messages:
 ### Create a Messaging Service
 
 - Navigate to "Messaging > "Services" in the Twilio Console.
-- Click "Create Messaging Service". 
+- Click "Create Messaging Service".
 - You can skip the next setting configurations like adding senders.
 - Finally, you'll receive a Messaging Service SID (used in the script).
 
@@ -103,13 +103,14 @@ There is an example webhook provided in [here](https://github.com/anantoj/harnis
 
 #### 2. Deploy your function
 
-- In your Twilio console, navigate to "Function and Assets" > "Functions (Classic)" > List. 
+- In your Twilio console, navigate to "Function and Assets" > "Functions (Classic)" > List.
 - Click the "+" button and choose the "blank" template.
 - Paste your Node.js function that you have created
 - Create your own custom webhook link.
 - Go to "Configure" to setup your NPM modules and environment variables
 
 #### 3. Connect the webhook to your WhatsApp Sender
+
 - In the Twilio Console, go to "Messaging > Senders > WhatsApp Senders."
 - Click on the sender you want your webhook to be linked to
 - In "How would you like to configure this sender?", choose Use webhooks
@@ -117,4 +118,4 @@ There is an example webhook provided in [here](https://github.com/anantoj/harnis
 
 Congratulations, now a user messaging to your WhatsApp Sender will immediately trigger a request to your webhook!
 
-**NOTE**: this is just one way of setting up a webhook in Twilio. You can, for instance utilize Services instead of Functions(classic). For the 3rd step shown above, you can also connect the webhook via Messaging Services. You can modify the setup to fit your own use case. 
+**NOTE**: this is just one way of setting up a webhook in Twilio. You can, for instance utilize Services instead of Functions(classic). For the 3rd step shown above, you can also connect the webhook via Messaging Services. You can modify the setup to fit your own use case.
