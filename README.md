@@ -1,14 +1,14 @@
-# Harnis Twilio
+# Twilio WhatsApp Messaging
 
-A Python library for bulk sending WhatsApp messages and automatic custom responses through Twilio's WhatsApp API.
+A library for bulk sending WhatsApp messages and automatic custom responses through Twilio's WhatsApp API.
 
 ## Installation
 
 1. Clone the repo and Install the required dependencies
 
 ```bash
-git clone https://github.com/anantoj/harnis_twilio.git
-cd harnis_twilio
+git clone https://github.com/anantoj/twilio-whatsapp-messaging.git
+cd twilio-whatsapp-messaging
 pip install -r requirements.txt
 ```
 
