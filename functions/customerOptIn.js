@@ -15,13 +15,13 @@ exports.handler = function (context, event, callback) {
 
     client.messages.create({
         contentSid: contentSid,
-        from: whatsAppSender,
+        from: `whatsapp:${whatsAppSender}`,
         contentVariables: JSON.stringify({
             1: customerNumber,
             2: buttonPressed
         }),
         messagingServiceSid: messagingServiceSid,
-        to: marketingNumber
+        to: `whatsapp:${marketingNumber}`
     })
         .then(message => console.log(message.sid))
         .catch(error => console.error(error));

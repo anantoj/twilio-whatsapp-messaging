@@ -39,7 +39,7 @@ def send_whatsapp_messages(
         try:
             message = client.messages.create(
                 content_sid=content_sid,
-                from_=f"whatsapp:+{config["WHATSAPP_SENDER"]}",  
+                from_=f"whatsapp:{config['WHATSAPP_SENDER']}",  
                 to=f"whatsapp:{phone_number}",
                 messaging_service_sid=messaging_service_sid, 
             )
