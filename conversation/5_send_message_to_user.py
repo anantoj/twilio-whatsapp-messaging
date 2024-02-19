@@ -14,7 +14,7 @@ client = Client(account_sid, auth_token)
 message = client.conversations.v1.conversations(
     config["CONVERSATION_SID"]
 ).messages.create(
-    author=f"whatsapp:{config["MARKETING_NUMBER"]}",
+    author=f"whatsapp:{config['MARKETING_NUMBER']}",
     content_sid=config["TEMPLATE_CONTENT_SID"],
 )
 

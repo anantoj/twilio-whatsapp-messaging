@@ -11,6 +11,7 @@ client = Client(account_sid, auth_token)
 # Replace with your approved WhatsApp template content SID
 template_content_sid = config["TEMPLATE_CONTENT_SID"]
 
+
 def create_customer_conversation(customer_number):
     """
     Creates a new conversation for a customer, sends an initial message,
@@ -56,7 +57,6 @@ def main():
 
     for customer_number in customer_list:
         conversation_sid = create_customer_conversation(customer_number)
-     
 
 
 if __name__ == "__main__":

@@ -6,3 +6,4 @@ python send_message.py \
   --phone_numbers_file "path/to/phone_numbers.xlsx" \
   --column "phones" \
   --messaging_service_sid "YOUR_MESSAGING_SID" \
+  --use_names \

@@ -14,8 +14,8 @@ client = Client(account_sid, auth_token)
 participant = client.conversations.v1.conversations(
     config["CONVERSATION_SID"]
 ).participants.create(
-    messaging_binding_address=f"whatsapp:{config["CUSTOMER_NUMBER"]}",
-    messaging_binding_proxy_address=f"whatsapp:{config["WHATSAPP_SENDER"]}",
+    messaging_binding_address=f"whatsapp:{config['CUSTOMER_NUMBER']}",
+    messaging_binding_proxy_address=f"whatsapp:{config['WHATSAPP_SENDER']}",
 )
 
 print(participant.sid)
