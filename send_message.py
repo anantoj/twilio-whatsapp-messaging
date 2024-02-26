@@ -43,7 +43,7 @@ def get_names(df: pd.DataFrame):
         A list of full names.
     """
     return [
-        f"{row['Contact/First Name']} {row['Contact/Last Name']}"
+        f"{row['Contact/First Name'] if not pd.isna(row['Contact/First Name']) else ''} {row['Contact/Last Name'] if not pd.isna(row['Contact/Last Name']) else ''}"
         for index, row in df.iterrows()
     ]
 
