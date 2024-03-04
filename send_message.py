@@ -20,6 +20,11 @@ def parse_args():
         help="The column number containing phone numbers (1-based)",
     )
     parser.add_argument(
+        "--sal_column",
+        type=str,
+        help="The column number containing salutations in the Excel file",
+    )
+    parser.add_argument(
         "--messaging_service_sid", help="The messaging service SID (optional)"
     )
     parser.add_argument(
@@ -52,6 +57,7 @@ def send_whatsapp_messages(
     content_sid: str,
     phone_numbers_file: str,
     phone_column: str,
+    sal_column: str,
     messaging_service_sid: str,
     use_names: bool = False,
 ) -> None:
@@ -90,15 +96,16 @@ def send_whatsapp_messages(
     # Read phone numbers using pandas
     df = pd.read_excel(phone_numbers_file)
     phone_numbers = df[phone_column].values.flatten()
+    salutations = df[sal_column].values.flatten()
     names = get_names(df)
-    for name, phone_number in zip(names, phone_numbers):
+    for sal, name, phone_number in zip(salutations, names, phone_numbers):
         try:
             if use_names:
                 message = client.messages.create(
                     content_sid=content_sid,
                     from_=f"whatsapp:{config['WHATSAPP_SENDER']}",
                     to=f"whatsapp:{phone_number}",
-                    content_variables=json.dumps({"1": name}),
+                    content_variables=json.dumps({"1": sal,"2": name}),
                     messaging_service_sid=messaging_service_sid,
                 )
             else:
@@ -122,6 +129,7 @@ if __name__ == "__main__":
         args.content_sid,
         args.phone_numbers_file,
         args.column,
+        args.sal_column,
         args.messaging_service_sid,
         args.use_names,
     )
