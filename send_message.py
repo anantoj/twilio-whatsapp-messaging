@@ -25,6 +25,12 @@ def parse_args():
         help="The column number containing salutations in the Excel file",
     )
     parser.add_argument(
+        "--sender_map", help="JSON file containing sender mappings"
+    )
+    parser.add_argument(
+        "--sender", help="WhatsApp sender name in the sender map"
+    )
+    parser.add_argument(
         "--messaging_service_sid", help="The messaging service SID (optional)"
     )
     parser.add_argument(
@@ -34,6 +40,11 @@ def parse_args():
     )
     return parser.parse_args()
 
+
+def get_whatsapp_sender(path_to_sender_map, user):
+    with open(path_to_sender_map) as f:
+        data = json.load(f)
+        return data.get(user, "User does not exist")
 
 # TODO: Implement your own logic to extract names from the input excel file
 def get_names(df: pd.DataFrame):
@@ -58,6 +69,8 @@ def send_whatsapp_messages(
     phone_numbers_file: str,
     phone_column: str,
     sal_column: str,
+    sender_map: str,
+    sender: str,
     messaging_service_sid: str,
     use_names: bool = False,
 ) -> None:
@@ -99,11 +112,12 @@ def send_whatsapp_messages(
     salutations = df[sal_column].values.flatten()
     names = get_names(df)
     for sal, name, phone_number in zip(salutations, names, phone_numbers):
+        whatsapp_sender = get_whatsapp_sender(sender_map, sender)
         try:
             if use_names:
                 message = client.messages.create(
                     content_sid=content_sid,
-                    from_=f"whatsapp:{config['WHATSAPP_SENDER']}",
+                    from_=f"whatsapp:{whatsapp_sender}",
                     to=f"whatsapp:{phone_number}",
                     content_variables=json.dumps({"1": sal,"2": name}),
                     messaging_service_sid=messaging_service_sid,
@@ -111,7 +125,7 @@ def send_whatsapp_messages(
             else:
                 message = client.messages.create(
                     content_sid=content_sid,
-                    from_=f"whatsapp:{config['WHATSAPP_SENDER']}",
+                    from_=f"whatsapp:{whatsapp_sender}",
                     to=f"whatsapp:{phone_number}",
                     messaging_service_sid=messaging_service_sid,
                 )
@@ -130,6 +144,8 @@ if __name__ == "__main__":
         args.phone_numbers_file,
         args.column,
         args.sal_column,
+        args.sender_map,
+        args.sender,
         args.messaging_service_sid,
         args.use_names,
     )

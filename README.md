@@ -29,29 +29,50 @@ Ensure a column containing phone numbers in E.164 format. Optionally include a "
 
 3. Setup your Twilio Whatsapp sender and webhook. Refer to the [Twilio Setup](#twilio-setup) section for more info.
 
-4. Run the script
+4. Ensure you have a JSON file for the mapping of your whatsapp sender in the following format:
+
+```json
+{
+    "whatsapp_sender1": "phone_number1",
+    "whatsapp_sender2": "phone_number2",
+    ...
+}
+```
+
+5. Run the script
 
 ```bash
 python send_message.py \
   --content_sid "YOUR_CONTENT_SID" \
   --phone_numbers_file "path/to/phone_numbers.xlsx" \
   --column "phones" \
+  --sal_column "Sal" \
+  --sender_map "whatsapp_sender_map.json" \
+  --sender "tere" \
   --messaging_service_sid "YOUR_MESSAGING_SID" \
+  --use_names \
 ```
 
 - `--content_sid`: The Content SID of the WhatsApp message you want to send.
 - `--phone_numbers_file`: The path to your Excel file containing phone numbers.
-- `--column`: The column number containing phone numbers (1-based).
+- `--column`: The column number containing phone numbers.
+- `--sal_column`: The column number containing salutations in the Excel file.
+- `--sender_map`: JSON file containing sender mappings.
+- `--sender`: WhatsApp sender name in the sender map.
 - `--messaging_service_sid (optional)`: The Messaging Service SID for improved deliverability (requires a Twilio Messaging Service)
-
+- `--use_names`: Use the name information provided on the excel file (optional).
 Example:
 
 ```bash
 python ./twilio_whatsapp_sender.py \
     --content_sid CAXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
     --phone_numbers_file contacts.xlsx \
-    --column 2 \
-    --messaging_service_sid MSXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    --column "phones" \
+    --sal_column "Sal" \
+    --sender_map "whatsapp_sender_map.json" \
+    --sender "whatsapp_sender1" \
+    --messaging_service_sid MSXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
+    --use_names \
 ```
 
 or you can just run the sample script:

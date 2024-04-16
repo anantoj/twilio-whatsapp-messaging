@@ -1,6 +1,7 @@
 input
 run.sh
 twilio_recovery_code.txt
+whatsapp_sender_map.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
